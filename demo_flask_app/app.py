@@ -16,5 +16,9 @@ def news():
 def contact():
     return render_template('contact.html')
 
+@app.route('/design_basics')
+def design_basics():
+    return render_template('html_css.html')
+
 if __name__ == "__main__":
     app.run(debug=True)
