@@ -20,5 +20,10 @@ def contact():
 def design_basics():
     return render_template('html_css.html')
 
+@app.route('/form1',methods=['GET','POST'])
+def form1_handler():
+    
+    return render_template('form_1.html')
+
 if __name__ == "__main__":
     app.run(debug=True)
