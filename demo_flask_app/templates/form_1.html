@@ -5,7 +5,7 @@
 <div class="container mx-auto">
   <form method="post" id="form1">
     <!-- sm here is the  size of item, we have options xs,sm,md,lg -->
-    <div class="form-control w-full max-w-sm">
+    <div class="form-control w-full max-w-xs">
       <label class="label" for="fullname">
         <span class="label-text">What is your name?</span>
       </label>
@@ -44,6 +44,7 @@
     </div>
     <div class="form-control w-full max-w-xs my-3">
       <button class="btn btn-xs sm:btn-sm md:btn-md lg:btn-lg">Responsive</button>
+      <progress class="progress w-full max-w-xs my-1 invisible" id="form-progress"></progress>
     </div>
   </form>
 </div>
@@ -54,18 +55,38 @@
   // if the page is loaded
   $(function () {
     let form1 = $('#form1');
+    let pb = $('#form-progress');
     // when the form is submitted, handle the form data
     form1.on('submit', (event) => {
       event.preventDefault();
+      pb.removeClass('invisible');
       url = '/form1_ajax'
-      $.ajax({
-        url: url,
-        type: 'POST',
-        data: form1.serialize(),
-        success: function (data) {
-          console.log(data);
-        }
-      });
+      // add a delay for 2 sec
+      setTimeout(() => {
+        $.ajax({
+          url: url,
+          type: 'POST',
+          data: form1.serialize(),
+          success: function (data) {
+            console.log(data);
+            pb.addClass('invisible');
+            Swal.fire(
+              'Good job!',
+              'Your form was submitted!',
+              'success'
+            )
+          },
+          error: function (data) {
+            console.log(data);
+            Swal.fire(
+              'Error!',
+              'There was an error',
+              'error'
+            )
+          }
+
+        });
+      }, 2000);
     })
   });
 </script>
