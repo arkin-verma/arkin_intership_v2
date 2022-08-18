@@ -50,6 +50,10 @@ def login_api():
             db.close()
             return jsonify({"success": "Login successful"})
 
+@app.route('/logout')
+def logout():
+    session.clear()
+    return redirect(url_for('index'))
 
 @app.route('/register_api',methods=['POST'])
 def form1_ajax_handler():
