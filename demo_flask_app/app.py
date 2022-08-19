@@ -24,31 +24,32 @@ def form1_handler():
 
 @app.route('/login')
 def login_form():
-    return render_template('login.html')   
+    next =  request.args.get('next','/')
+    return render_template('login.html', nextaddr=next)   
 
 @app.route('/login_api', methods=['POST']) 
 def login_api():
     email = request.form.get('email')
     password = request.form.get('password')
     if len(email) == 0 or len(password) == 0:
-        return jsonify({"error": "Please enter email and password"})
+        return jsonify({"message": "Please enter email and password", 'status':'error'})
     elif len(email)<10 or '@' not in email:
-        return jsonify({"error": "Please enter a valid email"})
+        return jsonify({"message": "Please enter a valid email", 'status':'error'})
     else:
         db = connect_db()
         user = db.query(User).filter_by(email=email).first()
         if user is None:
             db.close()
-            return jsonify({"error": "User not found"})
+            return jsonify({"message": "User not found", 'status':'error'})
         elif user.password != password:
             db.close()
-            return jsonify({"error": "Incorrect password"})
+            return jsonify({"message": "Incorrect password", 'status':'error'})
         else:
             session['user_id'] = user.id
             session['user_email'] = user.email
             session['is_logged_in'] = True
             db.close()
-            return jsonify({"success": "Login successful"})
+            return jsonify({'status':"success", "message":"Login successful"})
 
 @app.route('/logout')
 def logout():
@@ -77,7 +78,25 @@ def form1_ajax_handler():
         db.close()
         return jsonify({"status":"success","message":"User created successfully"})
 
+@app.route('/startmining',methods=['GET','POST'])
+def start_mining():
+    if 'is_logged_in' not in session:
+        flash('Please login to start mining')
+        return redirect('/login?next=startmining')
+    return render_template('start_mining.html')
 
+@app.route('/scrapper_api',methods=['POST'])
+def scrapper_api():
+    if 'is_logged_in' not in session:
+        return jsonify({"status":"error","message":"Please login to start mining"})
+    else:
+        url = request.form.get('product_url')
+        if len(url)<10: # url validation should be fixed,not the best
+            return jsonify({"status":"error","message":"Please enter a valid url"})
+        else:
+            # call scrapper function
+            # save the result in database
+            return jsonify({"status":"success","message":"Product scrapped successfully"})
 
 if __name__ == "__main__":
     app.run(debug=True)
