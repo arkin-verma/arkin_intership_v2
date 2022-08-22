@@ -1,6 +1,7 @@
 from flask import Flask, jsonify, request, render_template, session, flash, redirect, url_for
 from sqlalchemy.orm import sessionmaker
 from database import Base, User, ReviewData, create_engine, DATABASE_PATH
+from spider import collect_reviews, get_review_link, save_reviews
 
 app = Flask(__name__)
 app.secret_key = '3021alkfjf123=9saasd'
