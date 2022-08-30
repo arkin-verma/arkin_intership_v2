@@ -59,7 +59,7 @@ def save_reviews(datalist=None, filename='reviews.json', db=None):
     return save_path
 
 if __name__ == '__main__':
-    product_url = 'https://www.amazon.com/Apple-MacBook-13-inch-256GB-Storage/dp/B08N5M7S6K/ref=sr_1_1?crid=3D2TWY8NWW02P&keywords=macbook&qid=1661143915&sprefix=macbook%2Caps%2C348&sr=8-1'
+    product_url = 'https://www.amazon.com/AmazonBasics-6-Inch-Stainless-Steel-4-Pack/dp/B0812JV4L6/ref=sr_1_1_sspa?crid=1MNRSZBINEA3A&keywords=ruler&qid=1661832448&sprefix=ruler%2Caps%2C129&sr=8-1-spons&spLa=ZW5jcnlwdGVkUXVhbGlmaWVyPUExNTJWQ1VIMEZFTEUmZW5jcnlwdGVkSWQ9QTA4OTIxOTAxV1kyWUlZWk85SFIyJmVuY3J5cHRlZEFkSWQ9QTAxODM3OTFIWkxRNjBTNVVQWE0md2lkZ2V0TmFtZT1zcF9hdGYmYWN0aW9uPWNsaWNrUmVkaXJlY3QmZG9Ob3RMb2dDbGljaz10cnVl&th=1'
     reviews_link = get_review_link(product_url)
     print(reviews_link)
     reviews = collect_reviews(reviews_link, limit=3)
