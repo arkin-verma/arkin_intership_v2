@@ -4,7 +4,7 @@ from database import Base, User, ReviewData, create_engine, DATABASE_PATH
 from spider import collect_reviews, get_review_link, save_reviews
 
 app = Flask(__name__)
-app.secret_key = '3021alkfjf123=9saasd'
+app.secret_key = '' # INPUT SECRET KEY HERE
 
 def connect_db():
     engine = create_engine(DATABASE_PATH)
